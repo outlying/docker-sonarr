@@ -8,6 +8,6 @@ jobs:
       - docker build -t sonarr .
       - docker images
       - docker tag sonarr $DOCKER_USERNAME/sonarr:latest
+    - stage: Deploy
+      script:
       - docker push $DOCKER_USERNAME/sonarr
-    - stage: Test
-      script: docker run --rm $DOCKER_USERNAME/sonarr
