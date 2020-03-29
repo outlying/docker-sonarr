@@ -14,3 +14,5 @@ jobs:
       - docker images
       - docker tag sonarr $DOCKER_USERNAME/sonarr:latest
       - docker push $DOCKER_USERNAME/sonarr
+    - stage: Test
+      script: docker run --rm $DOCKER_USERNAME/sonarr
