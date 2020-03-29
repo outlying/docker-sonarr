@@ -10,5 +10,5 @@ jobs:
       - docker tag sonarr $DOCKER_USERNAME/sonarr
       - docker push $DOCKER_USERNAME/sonarr
     - stage: test
-      script: docker run --rm $DOCKER_USERNAME/sonarr cat hello.txt
-    - script: docker run --rm $DOCKER_USERNAME/sonarr cat hello.txt
+      script: docker run --rm $DOCKER_USERNAME/sonarr
+    - script: docker run --rm $DOCKER_USERNAME/sonarr
