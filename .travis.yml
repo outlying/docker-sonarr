@@ -1,2 +1,14 @@
-services:
-  - docker
+dist: trusty
+
+jobs:
+  include:
+    - stage: build docker image
+      script:
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - docker build -t sonarr .
+      - docker images
+      - docker tag sonarr $DOCKER_USERNAME/sonarr
+      - docker push $DOCKER_USERNAME/sonarr
+    - stage: test
+      script: docker run --rm $DOCKER_USERNAME/sonarr cat hello.txt
+    - script: docker run --rm $DOCKER_USERNAME/sonarr cat hello.txt
