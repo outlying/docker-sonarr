@@ -1,10 +1,5 @@
 dist: trusty
 
-env:
-- ARCH=
-- ARCH=aarch64
-- ARCH=armhf
-
 jobs:
   include:
     - stage: Build docker image
