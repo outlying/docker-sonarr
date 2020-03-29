@@ -7,8 +7,7 @@ jobs:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker build -t sonarr .
       - docker images
-      - docker tag sonarr $DOCKER_USERNAME/sonarr
+      - docker tag sonarr $DOCKER_USERNAME/sonarr:latest
       - docker push $DOCKER_USERNAME/sonarr
     - stage: test
       script: docker run --rm $DOCKER_USERNAME/sonarr
-    - script: docker run --rm $DOCKER_USERNAME/sonarr
