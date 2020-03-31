@@ -8,6 +8,7 @@ os: linux
 env:
   global:
     - IMAGE=sonarr
+    - IMAGE=test
   jobs:
     - DOCKER_FILE=Dockerfile TAG_PREFIX=
     - DOCKER_FILE=Dockerfile.aarch64 TAG_PREFIX=arm64v8-
