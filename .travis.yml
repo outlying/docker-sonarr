@@ -8,7 +8,7 @@ env:
 
 script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build -t sonarr $DOCKER_FILE
+  - docker build -t sonarr -f $DOCKER_FILE .
   - docker images
   - docker tag sonarr ${DOCKER_USERNAME}/sonarr:${TAG_PREFIX}latest
 
