@@ -13,15 +13,6 @@ env:
     - DOCKER_FILE=Dockerfile.aarch64 TAG_PREFIX=arm64v8-
     - DOCKER_FILE=Dockerfile.armhf TAG_PREFIX=arm32v7-
 
-script:
-  - export TAG=${TAG_PREFIX}latest
-  - echo Docker tag ${TAG}
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build --no-cache --pull -t ${IMAGE}:${TAG} -f $DOCKER_FILE .
-  - docker images
-  - docker tag ${IMAGE}:${TAG} ${DOCKER_USERNAME}/${IMAGE}:${TAG}
-  - docker push $DOCKER_USERNAME/${IMAGE}:${TAG}
-
 jobs:
   exclude:
   - arch: amd64
@@ -30,3 +21,16 @@ jobs:
     env: DOCKER_FILE=Dockerfile.armhf TAG_PREFIX=arm32v7-
   - arch: arm64
     env: DOCKER_FILE=Dockerfile TAG_PREFIX=
+  include:
+    - stage: test
+      name: Build
+      script:
+        - export TAG=${TAG_PREFIX}latest
+        - echo Docker tag ${TAG}
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker build --no-cache --pull -t ${IMAGE}:${TAG} -f $DOCKER_FILE .
+        - docker images
+        - docker tag ${IMAGE}:${TAG} ${DOCKER_USERNAME}/${IMAGE}:${TAG}
+    - name: Deploy
+      script: 
+        - docker push $DOCKER_USERNAME/${IMAGE}:${TAG}
