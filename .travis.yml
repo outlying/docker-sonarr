@@ -6,6 +6,10 @@ env:
     - DOCKER_FILE=Dockerfile.aarch64 TAG_PREFIX=arm64v8-
     - DOCKER_FILE=Dockerfile.armhf TAG_PREFIX=arm32v7-
 
+stages:
+  - build
+  - deploy
+
 jobs:
   include:
     - stage: build
