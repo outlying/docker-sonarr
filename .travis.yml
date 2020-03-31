@@ -2,9 +2,9 @@ dist: trusty
 
 env:
   jobs:
-    - DOCKER_FILE=Dockerfile TAG_PREFIX=""
-    - DOCKER_FILE=Dockerfile.aarch64 TAG_PREFIX="arm64v8-"
-    - DOCKER_FILE=Dockerfile.armhf TAG_PREFIX="arm32v7-"
+    - DOCKER_FILE=Dockerfile TAG_PREFIX=
+    - DOCKER_FILE=Dockerfile.aarch64 TAG_PREFIX=arm64v8-
+    - DOCKER_FILE=Dockerfile.armhf TAG_PREFIX=arm32v7-
 
 jobs:
   include:
