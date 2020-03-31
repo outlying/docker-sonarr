@@ -10,7 +10,7 @@ env:
 
 script:
   - export TAG=${TAG_PREFIX}latest
-  - exho Docker tag ${TAG}
+  - echo Docker tag ${TAG}
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build --no-cache --pull -t ${IMAGE}:${TAG} -f $DOCKER_FILE .
   - docker images
