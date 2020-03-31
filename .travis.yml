@@ -8,12 +8,14 @@ env:
 
 jobs:
   include:
-    - stage: Build docker image
+    - stage: build
+      name: Build docker image
       script:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker build -t sonarr $DOCKER_FILE
       - docker images
       - docker tag sonarr ${DOCKER_USERNAME}/sonarr:${TAG_PREFIX}latest
-    - stage: Deploy
+    - stage: deploy
+      name: Deploy
       script:
       - docker push $DOCKER_USERNAME/sonarr
