@@ -31,6 +31,7 @@ jobs:
         - docker build --no-cache --pull -t ${IMAGE}:${TAG} -f $DOCKER_FILE .
         - docker images
         - docker tag ${IMAGE}:${TAG} ${DOCKER_USERNAME}/${IMAGE}:${TAG}
-    - name: Deploy
+    - stage: Deploy
+      name: Deploy
       script: 
         - docker push $DOCKER_USERNAME/${IMAGE}:${TAG}
