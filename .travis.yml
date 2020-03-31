@@ -1,5 +1,10 @@
 dist: trusty
 
+arch:
+  - amd64
+  - arm64
+os: linux
+
 env:
   global:
     - IMAGE=sonarr
