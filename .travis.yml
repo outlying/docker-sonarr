@@ -20,3 +20,12 @@ script:
   - docker build --no-cache --pull -t ${IMAGE}:${TAG} -f $DOCKER_FILE .
   - docker images
   - docker tag ${IMAGE}:${TAG} ${DOCKER_USERNAME}/${IMAGE}:${TAG}
+
+jobs:
+  exclude:
+  - arch: amd64
+    env: DOCKER_FILE=Dockerfile.aarch64 TAG_PREFIX=arm64v8-
+  - arch: amd64
+    env: DOCKER_FILE=Dockerfile.armhf TAG_PREFIX=arm32v7-
+  - arch: arm64
+    env: DOCKER_FILE=Dockerfile TAG_PREFIX=
