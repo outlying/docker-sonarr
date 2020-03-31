@@ -1,16 +1,20 @@
 dist: trusty
 
 env:
+  global:
+    - IMAGE=sonarr
   jobs:
     - DOCKER_FILE=Dockerfile TAG_PREFIX=
     - DOCKER_FILE=Dockerfile.aarch64 TAG_PREFIX=arm64v8-
     - DOCKER_FILE=Dockerfile.armhf TAG_PREFIX=arm32v7-
 
 script:
+  - export TAG=${TAG_PREFIX}latest
+  - exho Docker tag ${TAG}
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build -t sonarr -f $DOCKER_FILE .
+  - docker build --no-cache --pull -t ${IMAGE}:${TAG} -f $DOCKER_FILE .
   - docker images
-  - docker tag sonarr ${DOCKER_USERNAME}/sonarr:${TAG_PREFIX}latest
+  - docker tag ${IMAGE}:${TAG} ${DOCKER_USERNAME}/${IMAGE}:${TAG}
 
 stages:
   - test
