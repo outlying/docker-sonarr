@@ -1,13 +1,19 @@
 dist: trusty
 
+env:
+  jobs:
+    - DOCKER_FILE=Dockerfile TAG_PREFIX=""
+    - DOCKER_FILE=Dockerfile.aarch64 TAG_PREFIX="arm64v8-"
+    - DOCKER_FILE=Dockerfile.armhf TAG_PREFIX="arm32v7-"
+
 jobs:
   include:
     - stage: Build docker image
       script:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      - docker build -t sonarr .
+      - docker build -t sonarr $DOCKER_FILE
       - docker images
-      - docker tag sonarr $DOCKER_USERNAME/sonarr:latest
+      - docker tag sonarr ${DOCKER_USERNAME}/sonarr:${TAG_PREFIX}latest
     - stage: Deploy
       script:
       - docker push $DOCKER_USERNAME/sonarr
