@@ -19,6 +19,8 @@ jobs:
       - docker build -t sonarr $DOCKER_FILE
       - docker images
       - docker tag sonarr ${DOCKER_USERNAME}/sonarr:${TAG_PREFIX}latest
+    - stage: test
+      script: docker images
     - stage: deploy
       name: Deploy
       script:
