@@ -6,22 +6,18 @@ env:
     - DOCKER_FILE=Dockerfile.aarch64 TAG_PREFIX=arm64v8-
     - DOCKER_FILE=Dockerfile.armhf TAG_PREFIX=arm32v7-
 
+script:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t sonarr $DOCKER_FILE
+  - docker images
+  - docker tag sonarr ${DOCKER_USERNAME}/sonarr:${TAG_PREFIX}latest
+
 stages:
-  - build
   - test
   - deploy
 
 jobs:
   include:
-    - stage: build
-      name: Build docker image
-      script:
-      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      - docker build -t sonarr $DOCKER_FILE
-      - docker images
-      - docker tag sonarr ${DOCKER_USERNAME}/sonarr:${TAG_PREFIX}latest
-    - stage: test
-      script: docker images
     - stage: deploy
       name: Deploy
       script:
